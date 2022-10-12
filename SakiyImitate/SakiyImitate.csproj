@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+    <PropertyGroup>
+	    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	    <IsPublishable>False</IsPublishable>
+	    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <DebugType>none</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <DebugType>none</DebugType>
+      <ShouldCreateLogs>True</ShouldCreateLogs>
+      <AdvancedSettingsExpanded>False</AdvancedSettingsExpanded>
+      <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
+      <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+      <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+      <AssemblyVersionSettings>None.None.None.None</AssemblyVersionSettings>
+      <UpdatePackageVersion>False</UpdatePackageVersion>
+      <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+      <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+    </PropertyGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\Sakiy\Sakiy.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;$(SolutionDir)\Sakiy\bin\Debug\net6.0\plugins\$(TargetName).dll&quot;" />
+  </Target>
+
+</Project>
