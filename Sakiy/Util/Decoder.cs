@@ -1,14 +1,30 @@
 ﻿using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Sakiy.Util
 {
     public sealed class Decoder
     {
-        internal Stream BaseStream;
+        private Stream BaseStream;
         public Decoder(Stream baseStream)
         {
             BaseStream = baseStream;
+        }
+        public void Decrypt(byte[] sharedSecret)
+        {
+            Aes aes = Aes.Create();
+            aes.Mode = CipherMode.CFB;
+            aes.Padding = PaddingMode.None;
+            aes.KeySize = 128;
+            aes.FeedbackSize = 8;
+            aes.Key = sharedSecret;
+            aes.IV = sharedSecret;
+            BaseStream = new CryptoStream(BaseStream, aes.CreateDecryptor(), CryptoStreamMode.Read);
+        }
+        public void Dispose()
+        {
+            BaseStream.Dispose();
         }
         public byte[] ReadBuffer(int length, bool reverse)
         {
@@ -75,6 +91,10 @@ namespace Sakiy.Util
         public string ReadString()
         {
             return Encoding.UTF8.GetString(ReadBuffer(ReadVarInt(), false));
+        }
+        public Guid ReadGuid()
+        {
+            return new Guid(ReadUInt(), ReadUShort(), ReadUShort(), ReadByte(), ReadByte(), ReadByte(), ReadByte(), ReadByte(), ReadByte(), ReadByte(), ReadByte());
         }
     }
 }

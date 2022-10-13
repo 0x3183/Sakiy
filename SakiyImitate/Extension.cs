@@ -5,7 +5,7 @@ public class Extension
 {
     public Extension()
     {
-        Clients.Added += (client) =>
+        Connections.Added += (client) =>
         {
             client.Handshake += (address, port) =>
             {

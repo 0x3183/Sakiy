@@ -1,13 +1,29 @@
-﻿using System.Text;
+﻿using System.Security.Cryptography;
+using System.Text;
 
 namespace Sakiy.Util
 {
     public sealed class Encoder
     {
-        internal Stream BaseStream;
+        private Stream BaseStream;
         internal Encoder(Stream baseStream)
         {
             BaseStream = baseStream;
+        }
+        public void Dispose()
+        {
+            BaseStream.Dispose();
+        }
+        public void Encrypt(byte[] sharedSecret)
+        {
+            Aes aes = Aes.Create();
+            aes.Mode = CipherMode.CFB;
+            aes.Padding = PaddingMode.None;
+            aes.KeySize = 128;
+            aes.FeedbackSize = 8;
+            aes.Key = sharedSecret;
+            aes.IV = sharedSecret;
+            BaseStream = new CryptoStream(BaseStream, aes.CreateEncryptor(), CryptoStreamMode.Write);
         }
         public void WriteBuffer(byte[] data, bool reverse)
         {
@@ -73,6 +89,22 @@ namespace Sakiy.Util
             byte[] buffer = Encoding.UTF8.GetBytes(data);
             WriteVarInt(buffer.Length);
             WriteBuffer(buffer, false);
+        }
+        public void WriteGuid(Guid data)
+        {
+            Decoder decoder = new(new MemoryStream(data.ToByteArray()));
+            if (BitConverter.IsLittleEndian)
+            {
+                WriteBuffer(decoder.ReadBuffer(4, false), true);
+                WriteBuffer(decoder.ReadBuffer(2, false), true);
+                WriteBuffer(decoder.ReadBuffer(2, false), true);
+                WriteBuffer(decoder.ReadBuffer(8, false), false);
+            }
+            else
+            {
+                WriteBuffer(decoder.ReadBuffer(16, false), false);
+            }
+            decoder.Dispose();
         }
     }
 }

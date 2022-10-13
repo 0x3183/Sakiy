@@ -33,7 +33,7 @@ namespace Sakiy.Api
                 {
                     Socket client = socket.Accept();
                     Monitor.Enter(Sockets);
-                    Clients.Add(new(client, endpoint));
+                    Connections.Add(new(client, endpoint));
                     Monitor.Exit(Sockets);
                 }
             }

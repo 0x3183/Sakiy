@@ -1,17 +1,18 @@
 ﻿using Sakiy.Net;
+using Sakiy.Util;
 
 namespace Sakiy.Api
 {
-    public static class Clients
+    public static class Connections
     {
-        private static readonly List<Client> ClientList = new();
-        public static event Action<Client> Added = (d) => { };
-        public static event Action<Client> Removed = (d) => { };
-        public static void Add(Client data)
+        private static readonly List<Connection> ConnectionsList = new();
+        public static event Action<Connection> Added = (d) => { };
+        public static event Action<Connection> Removed = (d) => { };
+        public static void Add(Connection data)
         {
-            Monitor.Enter(ClientList);
-            ClientList.Add(data);
-            Monitor.Exit(ClientList);
+            Monitor.Enter(ConnectionsList);
+            ConnectionsList.Add(data);
+            Monitor.Exit(ConnectionsList);
             Thread thread1 = new(data.Read)
             {
                 IsBackground = false,
@@ -20,17 +21,21 @@ namespace Sakiy.Api
             thread1.Start();
             Added(data);
         }
-        public static void Remove(Client data)
+        public static void Remove(Connection data, ChatComponent? reason)
         {
-            Monitor.Enter(ClientList);
-            ClientList.Remove(data);
-            Monitor.Exit(ClientList);
+            Monitor.Enter(ConnectionsList);
+            ConnectionsList.Remove(data);
+            Monitor.Exit(ConnectionsList);
+            if(reason != null)
+            {
+                //TODO: message
+            }
             data.Net.Close();
             Removed(data);
         }
-        public static IReadOnlyList<Client> List()
+        public static IReadOnlyList<Connection> List()
         {
-            return ClientList.AsReadOnly();
+            return ConnectionsList.AsReadOnly();
         }
     }
 }
