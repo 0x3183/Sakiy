@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 
 namespace Sakiy.Api
 {
-    public static class Listeners //TODO: rename to endpoints
+    public static class Endpoints
     {
         private static readonly Dictionary<IPEndPoint, Socket> Sockets = new();
 

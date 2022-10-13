@@ -5,7 +5,7 @@ public class Extension
 {
     public Extension()
     {
-        Listeners.Status += (local, remote, status) =>
+        Endpoints.Status += (local, remote, status) =>
         {
             status.Description = new ChatComponent.Text("")
             {
