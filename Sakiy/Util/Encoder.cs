@@ -3,16 +3,12 @@ using System.Text;
 
 namespace Sakiy.Util
 {
-    public sealed class Encoder
+    public sealed class Encoder : IDisposable
     {
         private Stream BaseStream;
         internal Encoder(Stream baseStream)
         {
             BaseStream = baseStream;
-        }
-        public void Dispose()
-        {
-            BaseStream.Dispose();
         }
         public void Encrypt(byte[] sharedSecret)
         {
@@ -24,6 +20,10 @@ namespace Sakiy.Util
             aes.Key = sharedSecret;
             aes.IV = sharedSecret;
             BaseStream = new CryptoStream(BaseStream, aes.CreateEncryptor(), CryptoStreamMode.Write);
+        }
+        public void Dispose()
+        {
+            BaseStream.Dispose();
         }
         public void WriteBuffer(byte[] data, bool reverse)
         {

@@ -5,19 +5,12 @@ public class Extension
 {
     public Extension()
     {
-        Connections.Added += (client) =>
+        Listeners.Status += (local, remote, status) =>
         {
-            client.Handshake += (address, port) =>
+            status.Description = new ChatComponent.Text("")
             {
-                Logs.Log(address);
-                Logs.Log(port);
-            };
-            client.Status += (status) =>
-            {
-                status.Description = new ChatComponent.Text("")
-                {
-                    Color = "dark_gray",
-                    Extra = new ChatComponent[]
+                Color = "dark_gray",
+                Extra = new ChatComponent[]
                     {
                         new ChatComponent.Text("Press "),
                         new ChatComponent.Keybind("key.jump")
@@ -26,7 +19,6 @@ public class Extension
                         },
                         new ChatComponent.Text(" to jump!"),
                     },
-                };
             };
         };
     }

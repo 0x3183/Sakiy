@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Sakiy.Util
 {
-    public sealed class Decoder
+    public sealed class Decoder : IDisposable
     {
         private Stream BaseStream;
         public Decoder(Stream baseStream)
