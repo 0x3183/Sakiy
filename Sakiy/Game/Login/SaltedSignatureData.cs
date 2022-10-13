@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sakiy.Util
+namespace Sakiy.Game.Login
 {
     public sealed class SaltedSignatureData
     {

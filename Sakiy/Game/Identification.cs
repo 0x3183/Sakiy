@@ -1,4 +1,4 @@
-﻿namespace Sakiy.Util
+﻿namespace Sakiy.Game
 {
     public struct Identification
     {

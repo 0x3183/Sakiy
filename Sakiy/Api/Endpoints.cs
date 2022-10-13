@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Sakiy.Net;
+using Sakiy.Game.Login;
 using Sakiy.Util;
 using System.Net;
 using System.Net.Sockets;

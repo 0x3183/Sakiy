@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
-using Sakiy.Util;
 
-namespace Sakiy.Net
+namespace Sakiy.Game.Login
 {
     public sealed class StatusResponse
     {

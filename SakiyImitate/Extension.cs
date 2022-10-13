@@ -1,5 +1,5 @@
 ﻿using Sakiy.Api;
-using Sakiy.Util;
+using Sakiy.Game;
 
 public class Extension
 {
