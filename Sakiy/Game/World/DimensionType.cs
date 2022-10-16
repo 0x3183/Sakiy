@@ -13,7 +13,7 @@ namespace Sakiy.Game.World
         public readonly int Height;  //TODO: does the client use this
         public readonly int MinY;  //TODO: does the client use this
         public readonly bool Natural;  //TODO: does the client use this
-        public NbtCompound Nbt
+        /*public NbtCompound Nbt
         {
             get
             {
@@ -44,6 +44,42 @@ namespace Sakiy.Game.World
                     { "piglin_safe", new NbtCompound(new Dictionary<string, NbtTag>() { { "value", new NbtByte(false) } }) },
                     { "respawn_anchor_works", new NbtCompound(new Dictionary<string, NbtTag>() { { "value", new NbtByte(true) } }) },
                     { "ultrawarm", new NbtCompound(new Dictionary<string, NbtTag>() { { "value", new NbtByte(false) } }) },
+                };
+                if (FixedTime.HasValue) element.Add("fixed_time", new NbtLong(FixedTime.Value)); //TODO: fix (value)
+                return new(element);
+            }
+        }*/
+        public NbtCompound Nbt
+        {
+            get
+            {
+                Dictionary<string, NbtTag> element = new() {
+                    { "ambient_light", new NbtFloat(AmbientLight) },
+                    { "bed_works", new NbtByte(true) },
+                    { "coordinate_scale", new NbtDouble(1.0) },
+                    { "effects", new NbtString(Effects) },
+                    { "has_ceiling", new NbtByte(false) },
+                    { "has_raids", new NbtByte(true) },
+                    { "has_skylight", new NbtByte(HasSkylight) },
+                    { "height", new NbtInt(Height) },
+                    { "infiniburn", new NbtString("#minecraft:overworld") },
+                    { "logical_height", new NbtInt(Height) },
+                    { "min_y", new NbtInt(MinY) },
+                    { "monster_spawn_block_light_limit", new NbtInt(0) },
+                    { "monster_spawn_light_level", new NbtCompound(new Dictionary<string, NbtTag>()
+                    {
+                        { "type", new NbtString("minecraft:uniform") },
+                        { "value", new NbtCompound(new Dictionary<string, NbtTag>()
+                        {
+                            { "max_inclusive", new NbtInt(15) },
+                            { "min_inclusive", new NbtInt(0) }
+                        })
+                        },
+                    }) },
+                    { "natural", new NbtByte(Natural) },
+                    { "piglin_safe", new NbtByte(false) },
+                    { "respawn_anchor_works", new NbtByte(true) },
+                    { "ultrawarm", new NbtByte(false) },
                 };
                 if (FixedTime.HasValue) element.Add("fixed_time", new NbtLong(FixedTime.Value));
                 return new(element);

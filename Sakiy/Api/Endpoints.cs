@@ -259,7 +259,8 @@ namespace Sakiy.Api
                                                     {
                                                         { "element", dimensions[i].Nbt},
                                                         { "name", new NbtString(dimensions[i].ID.ToString())},
-                                                        { "id", new NbtCompound(new Dictionary<string, NbtTag>() { { "value", new NbtInt(i) } })}
+                                                        { "id", new NbtInt(i) }
+                                                        //{ "id", new NbtCompound(new Dictionary<string, NbtTag>() { { "value", new NbtInt(i) } })}
                                                     }));
                                                 }
                                                 nbt.Set("value", list);
@@ -276,12 +277,13 @@ namespace Sakiy.Api
                                                     {
                                                         { "element", biomes[i].Nbt},
                                                         { "name", new NbtString(biomes[i].ID.ToString())},
-                                                        { "id", new NbtCompound(new Dictionary<string, NbtTag>() { { "value", new NbtInt(i) } })}
+                                                        { "id", new NbtInt(i) }
+                                                        //{ "id", new NbtCompound(new Dictionary<string, NbtTag>() { { "value", new NbtInt(i) } })}
                                                     }));
                                                 }
                                                 nbt.Set("value", list);
                                                 nbt.Set("type", new NbtString("minecraft:worldgen/biome"));
-                                                codec.Set("minecraft:worldgen/biome", nbt);
+                                                //codec.Set("minecraft:worldgen/biome", nbt);
                                             }
                                             {
                                                 NbtCompound nbt = new();
@@ -291,11 +293,12 @@ namespace Sakiy.Api
                                                     {
                                                         NbtCompound con = new();
                                                         con.Set("name", new NbtString("minecraft:chat"));
-                                                        {
+                                                        /*{
                                                             NbtCompound id = new();
                                                             id.Set("value", new NbtInt(0));
                                                             con.Set("id", id);
-                                                        }
+                                                        }*/
+                                                        con.Set("id", new NbtInt(0));
                                                         {
                                                             NbtCompound element = new();
                                                             {
@@ -329,9 +332,11 @@ namespace Sakiy.Api
                                                     }
                                                     nbt.Set("value", list);
                                                 }
-                                                codec.Set("minecraft:chat_type", nbt);
+                                                //codec.Set("minecraft:chat_type", nbt);
                                             }
                                             codec.Serialize(initialize);
+                                            //codec.Serialize(new(new FileStream("Z:/dump.bin", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None)));
+                                            //initialize.WriteByte(0);
                                         }
                                         initialize.WriteString(World.Dimensions.First().Type.ID.ToString());
                                         initialize.WriteString(World.Dimensions.First().ID.ToString());
@@ -357,7 +362,7 @@ namespace Sakiy.Api
                                         OUT.WriteBuffer(buffer, false);
                                     }
                                     //DEBUG//
-                                    using (MemoryStream ms = new())
+                                    /*using (MemoryStream ms = new())
                                     {
                                         Encoder disconnect = new(ms);
                                         disconnect.WriteVarInt(0x19);
@@ -366,7 +371,7 @@ namespace Sakiy.Api
                                         OUT.WriteVarInt(buffer.Length);
                                         OUT.WriteBuffer(buffer, false);
                                     }
-                                    return;
+                                    return;*/
                                     using (MemoryStream ms = new())
                                     {
                                         Encoder finish = new(ms);
@@ -377,12 +382,11 @@ namespace Sakiy.Api
                                         {
                                             NbtCompound heightmaps = new();
                                             {
-                                                NbtLongArray motionblocking = new(new long[32]);
+                                                NbtLongArray motionblocking = new(new long[256]);
                                                 heightmaps.Set("MOTION_BLOCKING", motionblocking);
                                             }
                                             heightmaps.Serialize(finish);
                                         }
-                                        finish.WriteByte(0);
                                         using (MemoryStream msb = new())
                                         {
                                             Encoder data = new(msb);
@@ -428,7 +432,7 @@ namespace Sakiy.Api
                                         OUT.WriteVarInt(buffer.Length);
                                         OUT.WriteBuffer(buffer, false);
                                     }
-                                    /*using (MemoryStream ms = new())
+                                    using (MemoryStream ms = new())
                                     {
                                         Encoder finish = new(ms);
                                         finish.WriteVarInt(0x39);
@@ -443,7 +447,7 @@ namespace Sakiy.Api
                                         byte[] buffer = ms.ToArray();
                                         OUT.WriteVarInt(buffer.Length);
                                         OUT.WriteBuffer(buffer, false);
-                                    }*/
+                                    }
                                     //DEBUG//
                                     while (client.Connected)
                                     {
