@@ -75,6 +75,14 @@ namespace Sakiy.Util
         {
             return BitConverter.ToInt64(ReadBuffer(8, BitConverter.IsLittleEndian));
         }
+        public float ReadFloat()
+        {
+            return BitConverter.ToSingle(ReadBuffer(4, BitConverter.IsLittleEndian));
+        }
+        public double ReadDouble()
+        {
+            return BitConverter.ToDouble(ReadBuffer(8, BitConverter.IsLittleEndian));
+        }
         public int ReadVarInt()
         {
             int position = 0;

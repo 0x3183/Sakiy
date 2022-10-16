@@ -63,11 +63,19 @@ namespace Sakiy.Util
         {
             WriteBuffer(BitConverter.GetBytes(data), BitConverter.IsLittleEndian);
         }
-        public void WriteUShort(ulong data)
+        public void WriteULong(ulong data)
         {
             WriteBuffer(BitConverter.GetBytes(data), BitConverter.IsLittleEndian);
         }
         public void WriteLong(long data)
+        {
+            WriteBuffer(BitConverter.GetBytes(data), BitConverter.IsLittleEndian);
+        }
+        public void WriteFloat(float data)
+        {
+            WriteBuffer(BitConverter.GetBytes(data), BitConverter.IsLittleEndian);
+        }
+        public void WriteDouble(double data)
         {
             WriteBuffer(BitConverter.GetBytes(data), BitConverter.IsLittleEndian);
         }

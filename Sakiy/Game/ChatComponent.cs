@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Sakiy.Type;
 
 namespace Sakiy.Game
 {
@@ -142,7 +143,7 @@ namespace Sakiy.Game
         [JsonProperty("obfuscated")]
         public bool? Obfuscated = null;
         [JsonProperty("font")]
-        public Identification? Font = null; //minecraft:uniform, minecraft:alt, minecraft:default
+        public Identifier? Font = null; //minecraft:uniform, minecraft:alt, minecraft:default
         [JsonProperty("insertion")]
         public string? Insertion = null;
         [JsonProperty("clickEvent")]

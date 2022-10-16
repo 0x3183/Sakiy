@@ -47,6 +47,12 @@
     </PropertyGroup>
 	
     <ItemGroup>
+      <Compile Remove="Game\World\BlockProperties\**" />
+      <EmbeddedResource Remove="Game\World\BlockProperties\**" />
+      <None Remove="Game\World\BlockProperties\**" />
+    </ItemGroup>
+	
+    <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 	
